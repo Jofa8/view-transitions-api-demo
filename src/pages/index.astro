@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro'
+import WhatsAppUser from '../components/WhatsAppUser.astro'
+import Title from '../components/Title.astro'
+import { chats } from '../data/chats.js'
+---
+
+<Layout title="View Transitions API demo">
+	<main class="h-screen flex justify-center items-center flex-col gap-10">
+		<Title />
+		<ul role="list" class="link-card-grid">
+			{
+				chats.map(({ id, title, lastMessage, photo, date}) => {
+					return (
+						<WhatsAppUser 
+							id={ id } 
+							title={ title } 
+							lastMessage={ lastMessage } 
+							photo={ photo } 
+							date={ date } 
+						/>
+					)
+				})
+			}
+		</ul>
+	</main>
+</Layout>

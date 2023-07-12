@@ -1,0 +1,59 @@
+---
+import Layout from "../layouts/Layout.astro"
+import ArrowBack from "../components/svg/ArrowBack.astro"
+import Camera from "../components/svg/Camera.astro"
+import Phone from "../components/svg/Phone.astro"
+import MoreOptions from "../components/svg/MoreOptions.astro"
+import { chats } from "../data/chats.js"
+
+const { chat } = Astro.params
+
+const info = chats.find(c => c.id === chat)
+
+if (!info) {
+  return Astro.redirect("/")
+}
+---
+
+<Layout title="View Transitions API demo">
+    <main class="h-screen flex justify-center items-center flex-col">
+		<!----------- TITLE ----------->
+		<h1
+			class="scale-75 font-black uppercase text-[32px] text-center py-4"
+			style="view-transition-name: title"
+		>
+			View Transitions API
+			<span class="block">Demo</span>
+		</h1>
+		<!---- WHATSAPP-CHAT-USER ---->
+		<div 
+			class="flex items-center justify-between relative gap-5 px-2 w-72 h-12 bg-slate-700" 
+			style=`view-transition-name: user-${info.id}` 
+		>
+			<div class="flex justify-center items-center flex-row gap-1">
+				<ArrowBack />
+				<img 
+					src={ `/img/${info.photo}` } 
+					alt={ `${info.id}` } 
+					class="w-7 h-7 rounded-full"
+					style=`view-transition-name: user-icon-${info.id}`
+				>
+				<h1 
+					class="text-[12px] font-semibold text-white ml-1" 
+					style=`view-transition-name: user-name-${info.id}`
+				>
+					{ info.title }
+				</h1>
+			</d>
+			<div class="flex items-start justify-center gap-3">
+				<Camera />
+				<Phone />
+				<MoreOptions />
+			</div>
+		</div>
+		<!-- WHATSAPP-CHAT-CONTAINER -->
+		<div class="relative w-72 h-[29rem] object-contain bg-[url('/img/whatsapp-chat-bg.jpg')] bg-no-repeat bg-cover animate-openUpToDown origin-[50%_0%]">
+			<div class="absolute bottom-2 right-4 m-auto w-64 h-6 bg-slate-700 rounded-2xl overflow-hidden" />
+		</div>
+	</main>
+</Layout>
